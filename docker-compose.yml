@@ -33,6 +33,8 @@ services:
     volumes:
       - /app/node_modules
       - ./gateway:/app
+    ports:
+      - 4000:4000
 
   client:
     build:
@@ -43,3 +45,5 @@ services:
     volumes:
       - /app/node_modules
       - ./client:/app
+    ports:
+      - 3000:3000

@@ -17,7 +17,7 @@ import { v4 as uuid } from 'uuid';
 export class ConsumerService implements OnApplicationShutdown {
   private readonly kafka = new Kafka({
     clientId: 'app-id',
-    brokers: ['localhost:19092', 'localhost:29092', 'localhost:39092'],
+    brokers: ['kafka-1:9092'],
   });
   private readonly consumers: Consumer[] = [];
 
