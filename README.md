@@ -10,3 +10,7 @@ This will spin up:
  - Kafka broker on port 9092
  - NestJS socket server on port 4000 with kafka consumer and producer
  - React app client on port 3000
+
+*Note:*
+React client uses local storage for subscriptions.\
+Delete `topics` key if facing issues.
