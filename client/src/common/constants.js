@@ -16,4 +16,4 @@ export const SOCKET_CLIENT_EVENTS = {
     PRODUCE_KAFKA_MESSAGE: 'produce-kafka-message'
 };
 
-export const KAFKA_TOPICS = ['BG', 'DE'];
+export const KAFKA_TOPICS = ['BG', 'DE', 'IN', 'US', 'FR'];

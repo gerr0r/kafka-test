@@ -3,7 +3,8 @@ export default function useMessageParser(type, data) {
         case 'status':
             return `(STATUS): ${data}`;
         case 'messages':
-            return `(TOPIC ${data.topic}): ${data.message}`;
+            const [date, ...message] = data.message.split('|');
+            return `[#${data.topic}] [${date}]: ${message.join(' ')}`;
         default:
             return '';
     }

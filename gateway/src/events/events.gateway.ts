@@ -4,11 +4,8 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  WsResponse,
 } from '@nestjs/websockets';
 import { Socket } from 'dgram';
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Server } from 'socket.io';
 import { ConsumerService } from 'src/kafka/consumer.service';
 import { ProducerService } from 'src/kafka/producer.service';
@@ -26,14 +23,14 @@ export class EventsGateway {
 
   @WebSocketServer()
   server: Server;
+  
 
   @SubscribeMessage('consume-kafka-messages')
   async consumeKafkaMessages(
     @MessageBody() data: any,
     @ConnectedSocket() client: Socket,
-  ): Promise<Observable<WsResponse<number>>> {
+  ): Promise<any> {
     console.log(data);
-
     await this.consumerService.consume(
       {
         topics: data.topics,
@@ -50,22 +47,20 @@ export class EventsGateway {
     );
 
     return;
-    // console.log(messages);
-
-    // return from(messages).pipe(
-    //   map((item) => ({ event: 'consume-events', data: item })),
-    // );
   }
 
   @SubscribeMessage('produce-kafka-message')
-  async produceKafkaMessage(@MessageBody() data: any): Promise<any> {
-    console.log(data);
+  async produceKafkaMessage(
+    @MessageBody() data: any,
+    @ConnectedSocket() client: Socket
+  ): Promise<any> {
     const { topic, message: value } = data;
+    console.log(`[SocketID: ${client['id']}]`, `[Topic: ${topic}]`, `Message: ${value}`);
 
     await this.producerService.produce({
       topic,
       messages: [{ value }],
     });
-    return data.message;
+    return data.message; // to FE socket.emit callback function
   }
 }

@@ -14,11 +14,11 @@ const RandomMessageGenerator = ({ numberOfMessages = 10 }) => {
             const weather = weatherTypes[Math.floor(Math.random() * weatherTypes.length)];
             const temperature = Math.floor(Math.random() * 12) + 20;
             const topic = countryCodes[Math.floor(Math.random() * countryCodes.length)];
-            const message = `Expected ${weather} weather and average temperature ~${temperature}˚C`;
+            const message = `Expected ${weather} weather and average temperature ~${temperature}˚C in ${topic}`;
 
             socket.emit(
                 SOCKET_CLIENT_EVENTS.PRODUCE_KAFKA_MESSAGE,
-                { topic, message: `${new Date()}: ${message}` },
+                { topic, message: `${new Date().toUTCString()}|${message}` },
                 (response) => console.log('Produced message:', response)
             );
         }
